@@ -5,10 +5,10 @@
     "preserveConstEnums": true,
     "noEmit": false,
     "module":"commonjs",
-    "esModuleInterop": true, 
+    "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true, 
-    "isolatedModules": true, 
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
   },
   "exclude": ["node_modules", "**/*.test.ts"]
 }

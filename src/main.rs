@@ -84,18 +84,15 @@ fn create_lambda_files(name: &str, runtime: &str) -> Result<String, Box<dyn Erro
 }
 
 fn run_post_creation_commands(project_name: &str, runtime: &str) -> Result<(), Box<dyn Error>> {
-    match runtime {
-        "TypeScript" => {
-            println!("Installing npm dependencies...");
-            let status = Command::new("npm")
-                .current_dir(project_name)
-                .arg("install")
-                .status()?;
-            if !status.success() {
-                return Err("npm install failed".into());
-            }
+    if runtime == "TypeScript" {
+        println!("Installing npm dependencies...");
+        let status = Command::new("npm")
+            .current_dir(project_name)
+            .arg("install")
+            .status()?;
+        if !status.success() {
+            return Err("npm install failed".into());
         }
-        _ => {}
     }
 
     Ok(())

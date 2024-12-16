@@ -17,4 +17,4 @@ template lambda
 provide:
 - name for your project
 - select language ( TypeScript, Dotnet, Python)
-- select if Terraform file for new lambda needs to be created
+- select if Terraform file for new lambda needs to be created (output directory ./terraform/)

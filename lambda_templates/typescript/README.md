@@ -1,1 +1,1 @@
-## {{project_name}} Lambda 
+## {{project_name}} Lambda

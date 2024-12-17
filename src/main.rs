@@ -6,7 +6,7 @@ use std::{error::Error, fs, path::Path, process::Command};
 
 #[derive(Parser)]
 #[command(name = "template")]
-#[command(about = "Project template generator", long_about = None)]
+#[clap(about = "Project template generator", long_about = None, version, author)]
 struct Cli {
     #[command(subcommand)]
     command: Commands,
@@ -14,6 +14,9 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
+    #[clap(
+        about = "Generates new lambda project (TS, .NET, Python) with optional terraform for it"
+    )]
     Lambda {},
 }
 
@@ -117,7 +120,7 @@ fn create_project_files(
 
     let project_dir_name = match context {
         "terraform" => "terraform".to_string(),
-        "lambda" => format!("{}/src", name),
+        "lambda" => format!("src/{}", name),
         _ => todo!(),
     };
     let project_dir = Path::new(&project_dir_name);

@@ -2,6 +2,7 @@
 name = "template"
 version = "0.1.1"
 edition = "2021"
+authors = ["Kat Kmiotek"]
 
 [dependencies]
 clap = { version = "4.5.23", features = [ "derive" ] }

@@ -2,7 +2,7 @@ use std::{error::Error, process::Command};
 
 use dialoguer::{theme::ColorfulTheme, Input, Select};
 
-use crate::{template_helper::create_project_files, runtime::Runtime};
+use crate::{runtime::Runtime, template_helper::create_project_files};
 
 pub fn create_dotnet_lambda(name: &str) -> Result<(), Box<dyn Error>> {
     println!("Installing .NET tools...");
@@ -54,10 +54,10 @@ pub fn create_lambda_project() -> Result<(), Box<dyn Error>> {
         .interact()
         .unwrap();
     let output_path = Input::with_theme(&ColorfulTheme::default())
-    .with_prompt("Where to save lambda project?")
-    .default(format!("src/{}", name))
-    .interact_text()
-    .unwrap();
+        .with_prompt("Where to save lambda project?")
+        .default(format!("src/{}", name))
+        .interact_text()
+        .unwrap();
 
     let yes_no = &["Yes", "No"];
     let need_terraform = Select::with_theme(&ColorfulTheme::default())

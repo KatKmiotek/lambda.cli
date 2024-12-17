@@ -36,7 +36,7 @@ pub fn create_project_files(
     name: &String,
     runtime: Runtime,
     context: &str,
-    output_directory: &str
+    output_directory: &str,
 ) -> Result<(), Box<dyn Error>> {
     let handlebars = load_templates(runtime, context).unwrap();
     let data = json!({

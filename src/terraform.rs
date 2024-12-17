@@ -2,7 +2,7 @@ use std::error::Error;
 
 use dialoguer::{theme::ColorfulTheme, Input};
 
-use crate::{template_helper::create_project_files, runtime::Runtime};
+use crate::{runtime::Runtime, template_helper::create_project_files};
 
 pub fn create_terraform_project() -> Result<(), Box<dyn Error>> {
     let name: String = Input::with_theme(&ColorfulTheme::default())

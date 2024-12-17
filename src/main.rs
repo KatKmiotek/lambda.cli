@@ -3,8 +3,8 @@ use lambda::create_lambda_project;
 use terraform::create_terraform_project;
 mod lambda;
 mod runtime;
-mod terraform;
 mod template_helper;
+mod terraform;
 
 #[derive(Parser)]
 #[command(name = "template")]
@@ -21,8 +21,7 @@ enum Commands {
     )]
     Lambda {},
     #[clap(about = "Generates new blank terraform module")]
-    Terraform {
-    },
+    Terraform {},
 }
 
 fn main() {

@@ -194,8 +194,7 @@ fn main() {
 
     println!(
         "Your {} lambda in {:?} has been created",
-        name,
-        runtimes[runtime].to_string()
+        name, runtimes[runtime]
     );
 }
 

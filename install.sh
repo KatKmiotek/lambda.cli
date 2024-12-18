@@ -47,4 +47,4 @@ if [ -n "$SHELL_CONFIG" ]; then
 fi
 
 echo "Successfully installed $BINARY_NAME! 🎉"
-echo "You can verify installation by running: $BINARY_NAME -v"
+echo "You can verify installation by running: $BINARY_NAME -V"

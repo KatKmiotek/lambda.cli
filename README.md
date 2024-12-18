@@ -5,8 +5,7 @@
 Steps:
 1. **Step for Mac**: Run `curl -fsSL https://raw.githubusercontent.com/KatKmiotek/lambda.cli/main/install.sh | sh`
 2. **Verify**: Verify installation by running `template -V`
-3. **Execute**: Now, you can use `template lambda` to run application
-4. **Help**: To view all available commands run `template --help`
+3. **Help**: To view all available commands run `template --help`
 
 ## Usage
 ### Lambda
@@ -34,6 +33,21 @@ provide:
   No
   ```
 
+### Terraform
+
+To create terraform module template run:
+```sh
+template terraform
+```
+provide:
+- name for your project that is also output directory path
+```shell
+? Project name (./terraform) ›
+```
+```sh
+✔ Project name · ./terraform/sub-module/my-module
+Terraform module ./terraform/sub-module/my-module has been created
+```
 
 ## Local development
 

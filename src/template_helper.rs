@@ -11,7 +11,7 @@ pub fn load_templates(
 ) -> Result<Handlebars<'static>, Box<dyn Error>> {
     let mut handlebars = Handlebars::new();
 
-    let template_dir_name = format!("{}_templates", context);
+    let template_dir_name = format!("src/{}_templates", context);
     let template_dir = Path::new(&template_dir_name).join(runtime.runtime_to_lowercase());
     for entry in fs::read_dir(&template_dir).expect("Directory doesn't exist") {
         let entry = entry?;
@@ -50,7 +50,7 @@ pub fn create_project_files(
     }
 
     let template_dir =
-        Path::new(&format!("{}_templates", context)).join(runtime.runtime_to_lowercase());
+        Path::new(&format!("src/{}_templates", context)).join(runtime.runtime_to_lowercase());
 
     for entry in fs::read_dir(template_dir).expect("Directory doesn't exist") {
         let entry = entry?;

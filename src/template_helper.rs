@@ -32,6 +32,19 @@ pub fn load_templates(
 
         handlebars.register_template_string(template_name, template_content)?;
     }
+    for sub_dir in runtime_dir.dirs() {
+        for file in sub_dir.files() {
+            let template_name = file
+                .path()
+                .file_stem()
+                .and_then(|n| n.to_str())
+                .ok_or("Invalid template filename")?;
+
+            let template_content = file.contents_utf8().ok_or("Invalid template content")?;
+
+            handlebars.register_template_string(template_name, template_content)?;
+        }
+    }
 
     Ok(handlebars)
 }
@@ -78,6 +91,35 @@ pub fn create_project_files(
         let content = handlebars.render(template_name, &data)?;
         let output_path = project_dir.join(output_filename);
         fs::write(output_path, content)?;
+    }
+
+    for sub_dir in runtime_dir.dirs() {
+        let sub_dir_name = sub_dir
+            .path()
+            .file_name()
+            .and_then(|n| n.to_str())
+            .ok_or("Invalid subdirectory name")?;
+
+        let sub_dir_path = project_dir.join(sub_dir_name);
+        fs::create_dir_all(&sub_dir_path)?;
+
+        for file in sub_dir.files() {
+            let template_name = file
+                .path()
+                .file_stem()
+                .and_then(|n| n.to_str())
+                .ok_or("Invalid template filename")?;
+
+            let output_filename = file
+                .path()
+                .file_name()
+                .and_then(|n| n.to_str())
+                .ok_or("Invalid output filename")?;
+
+            let content = handlebars.render(template_name, &data)?;
+            let output_path = sub_dir_path.join(output_filename);
+            fs::write(output_path, content)?;
+        }
     }
 
     Ok(())

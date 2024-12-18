@@ -1,4 +1,7 @@
 # templates helper
+Project with templates for:
+- [Lambda](#lambda)
+- [Terraform](#terraform)
 
 ## Installation
 

@@ -3,7 +3,7 @@
 set -e
 
 OWNER="KatKmiotek"
-REPO="lambda.cli"
+REPO="templates-helper"
 BINARY_NAME="template"
 INSTALL_DIR="/usr/local/bin"
 

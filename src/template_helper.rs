@@ -4,6 +4,7 @@ use handlebars::Handlebars;
 use serde_json::json;
 
 use crate::runtime::Runtime;
+use include_dir::{include_dir, Dir};
 
 pub fn load_templates(
     runtime: Runtime,
@@ -11,22 +12,25 @@ pub fn load_templates(
 ) -> Result<Handlebars<'static>, Box<dyn Error>> {
     let mut handlebars = Handlebars::new();
 
-    let template_dir_name = format!("src/{}_templates", context);
-    let template_dir = Path::new(&template_dir_name).join(runtime.runtime_to_lowercase());
-    for entry in fs::read_dir(&template_dir).expect("Directory doesn't exist") {
-        let entry = entry?;
-        let path = entry.path();
+    static TEMPLATES_DIR: Dir = include_dir!("templates"); // needed to embed templates dir within executable
 
-        if path.is_file() {
-            let template_name = path
-                .file_stem()
-                .and_then(|n| n.to_str())
-                .ok_or("Invalid template filename")?;
+    let template_dir_name = format!("{}_templates", context);
+    let runtime_path = format!("{}/{}", template_dir_name, runtime.runtime_to_lowercase());
 
-            let template_content = fs::read_to_string(&path)?;
+    let runtime_dir = TEMPLATES_DIR
+        .get_dir(&runtime_path)
+        .ok_or("Template directory not found")?;
 
-            handlebars.register_template_string(template_name, template_content)?;
-        }
+    for file in runtime_dir.files() {
+        let template_name = file
+            .path()
+            .file_stem()
+            .and_then(|n| n.to_str())
+            .ok_or("Invalid template filename")?;
+
+        let template_content = file.contents_utf8().ok_or("Invalid template content")?;
+
+        handlebars.register_template_string(template_name, template_content)?;
     }
 
     Ok(handlebars)
@@ -38,40 +42,43 @@ pub fn create_project_files(
     context: &str,
     output_directory: &str,
 ) -> Result<(), Box<dyn Error>> {
-    let handlebars = load_templates(runtime, context).unwrap();
+    let handlebars = load_templates(runtime, context)?;
     let data = json!({
         "project_name": name,
         "runtime": runtime.to_string(),
     });
 
-    let project_dir = Path::new(&output_directory);
+    let project_dir = Path::new(output_directory);
     if !project_dir.exists() {
         fs::create_dir_all(project_dir)?;
     }
 
-    let template_dir =
-        Path::new(&format!("src/{}_templates", context)).join(runtime.runtime_to_lowercase());
+    static TEMPLATES_DIR: Dir = include_dir!("templates");
 
-    for entry in fs::read_dir(template_dir).expect("Directory doesn't exist") {
-        let entry = entry?;
-        let template_path = entry.path();
+    let template_dir_name = format!("{}_templates", context);
+    let runtime_path = format!("{}/{}", template_dir_name, runtime.runtime_to_lowercase());
 
-        if template_path.is_file() {
-            let template_name = template_path
-                .file_stem()
-                .and_then(|n| n.to_str())
-                .ok_or("Invalid template filename")?;
+    let runtime_dir = TEMPLATES_DIR
+        .get_dir(&runtime_path)
+        .ok_or("Template directory not found")?;
 
-            let output_filename = template_path
-                .file_name()
-                .and_then(|n| n.to_str())
-                .ok_or("Invalid output filename")?;
+    for file in runtime_dir.files() {
+        let template_name = file
+            .path()
+            .file_stem()
+            .and_then(|n| n.to_str())
+            .ok_or("Invalid template filename")?;
 
-            let content = handlebars.render(template_name, &data)?;
+        let output_filename = file
+            .path()
+            .file_name()
+            .and_then(|n| n.to_str())
+            .ok_or("Invalid output filename")?;
 
-            let output_path = project_dir.join(output_filename);
-            fs::write(output_path, content)?
-        }
+        let content = handlebars.render(template_name, &data)?;
+        let output_path = project_dir.join(output_filename);
+        fs::write(output_path, content)?;
     }
+
     Ok(())
 }

@@ -6,20 +6,6 @@ mod runtime;
 mod template_helper;
 mod terraform;
 
-use rust_embed::RustEmbed;
-
-#[derive(RustEmbed)]
-#[folder = "src/lambda_templates"]
-struct LambdaTemplates;
-
-#[derive(RustEmbed)]
-#[folder = "src/terraform_templates"]
-struct TerraformTemplates;
-
-#[derive(RustEmbed)]
-#[folder = "src/terraform_module_templates"]
-struct TerraformModuleTemplates;
-
 #[derive(Parser)]
 #[command(name = "template")]
 #[clap(about = "Project template generator", long_about = None, version, author)]

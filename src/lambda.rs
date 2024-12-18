@@ -1,4 +1,4 @@
-use std::{error::Error, process::Command};
+use std::{error::Error, fs, path::Path, process::Command};
 
 use dialoguer::{theme::ColorfulTheme, Input, Select};
 
@@ -21,6 +21,26 @@ pub fn create_dotnet_lambda(name: &str) -> Result<(), Box<dyn Error>> {
         .arg(name)
         .status()
         .expect("Failed to create .NET Lambda project");
+
+    println!("Creating .gitignore file...");
+    let gitignore_content = r#"bin/
+obj/
+.vs/
+*.user
+*.userosscache
+*.suo
+.vscode/
+.idea/
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+"#;
+
+    let gitignore_path = Path::new(name).join(".gitignore");
+    fs::write(gitignore_path, gitignore_content)?;
+
     Ok(())
 }
 

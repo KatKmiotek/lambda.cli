@@ -3,7 +3,7 @@
 ## Installation
 
 Steps:
-1. **Step for Mac**: Run `curl -fsSL https://raw.githubusercontent.com/KatKmiotek/lambda.cli/main/install.sh | sh`
+1. **Step for Mac**: Run `curl -fsSL https://raw.githubusercontent.com/KatKmiotek/templates-helper/main/install.sh | sh`
 2. **Verify**: Verify installation by running `template -V`
 3. **Help**: To view all available commands run `template --help`
 

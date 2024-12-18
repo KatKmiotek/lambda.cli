@@ -6,7 +6,7 @@ module "lambda_function" {
   runtime       = "python3.12"
 
   source_path = "../src/{{project_name}}"
-  publish = true
+  publish     = true
   environment_variables = {
     ENV = "dev"
   }

@@ -97,11 +97,8 @@ pub fn create_lambda_project() -> Result<(), Box<dyn Error>> {
 
     run_post_creation_commands(&output_path, runtimes[runtime]).unwrap();
 
-    match need_terraform {
-        0 => {
-            create_project_files(&name, runtimes[runtime], "terraform", "terraform").unwrap();
-        }
-        _ => println!("No terraform will be created"),
+    if need_terraform == 0 {
+        create_project_files(&name, runtimes[runtime], "terraform", "terraform").unwrap();
     }
 
     println!(

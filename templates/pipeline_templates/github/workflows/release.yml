@@ -1,0 +1,13 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  job_one:
+   runs-on: ubuntu-latest
+   name: Job One
+   steps:
+    - name: Echo
+      run: echo "pipeline"

@@ -1,7 +1,9 @@
 use clap::{Parser, Subcommand};
 use lambda::create_lambda_project;
+use pipeline::create_pipeline_files;
 use terraform::create_terraform_project;
 mod lambda;
+mod pipeline;
 mod runtime;
 mod template_helper;
 mod terraform;
@@ -22,6 +24,7 @@ enum Commands {
     Lambda {},
     #[clap(about = "Generates new blank terraform module")]
     Terraform {},
+    Pipeline {},
 }
 
 fn main() {
@@ -33,5 +36,6 @@ fn main() {
         Commands::Terraform {} => {
             create_terraform_project().expect("Creating terraform project failed");
         }
+        Commands::Pipeline {} => create_pipeline_files().expect("Creating pipeline project failed"),
     }
 }

@@ -4,6 +4,7 @@ pub enum Runtime {
     Dotnet,
     Python,
     Terraform,
+    GitHub,
 }
 
 impl Runtime {
@@ -13,6 +14,7 @@ impl Runtime {
             Runtime::Dotnet => "dotnet",
             Runtime::Python => "python",
             Runtime::Terraform => "terraform",
+            Runtime::GitHub => "github",
         }
         .to_string()
     }
@@ -25,6 +27,7 @@ impl std::fmt::Display for Runtime {
             Runtime::Dotnet => write!(f, "Dotnet"),
             Runtime::Python => write!(f, "Python"),
             Runtime::Terraform => write!(f, "Terraform"),
+            Runtime::GitHub => write!(f, "GitHub"),
         }
     }
 }

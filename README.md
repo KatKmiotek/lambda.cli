@@ -2,6 +2,7 @@
 Project with templates for:
 - [Lambda](#lambda)
 - [Terraform](#terraform)
+- [Pipeline](#pipeline)
 
 ## Installation
 
@@ -51,6 +52,17 @@ provide:
 ✔ Project name · ./terraform/sub-module/my-module
 Terraform module ./terraform/sub-module/my-module has been created
 ```
+### Pipeline
+
+To create .github pipeline templates run:
+```sh
+template pipeline
+```
+This includes:
+- pull_request.yml
+- release.yml
+- CODEOWNERS file
+- pull_request_template.md
 
 ## Local development
 
